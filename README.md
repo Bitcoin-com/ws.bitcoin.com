@@ -27,7 +27,6 @@ Edit the `start-local-server` file and for the `ZEROMQ_URL` value add the IP add
 ```
 #!/bin/bash
 
-# Bitcoin.com staging websockets server
 export ZEROMQ_PORT=28332
 export ZEROMQ_URL=ip.address.of.node
 export NETWORK=mainnet
