@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var wtfnode = require("wtfnode"); // Debugging the event loop
-var util = require("util");
 var express = require("express");
 var req_logging_1 = require("./middleware/req-logging");
 // Middleware
@@ -28,21 +27,6 @@ if (process.env.NETWORK === "mainnet") {
 else {
     apiSpec = require("./public/bitcoin-com-testnet-rest-v2.json");
 }
-// v2
-var indexV2 = require("./routes/v2/index");
-var healthCheckV2 = require("./routes/v2/health-check");
-var addressV2 = require("./routes/v2/address");
-var cashAccountsV2 = require("./routes/v2/cashaccounts");
-var blockV2 = require("./routes/v2/block");
-var blockchainV2 = require("./routes/v2/blockchain");
-var controlV2 = require("./routes/v2/control");
-var generatingV2 = require("./routes/v2/generating");
-var miningV2 = require("./routes/v2/mining");
-var networkV2 = require("./routes/v2/network");
-var rawtransactionsV2 = require("./routes/v2/rawtransactions");
-var transactionV2 = require("./routes/v2/transaction");
-var utilV2 = require("./routes/v2/util");
-var slpV2 = require("./routes/v2/slp");
 require("dotenv").config();
 var app = express();
 app.locals.env = process.env;
@@ -73,20 +57,6 @@ var auth = new AuthMW();
 app.use("/" + v2prefix + "/", auth.mw());
 // Rate limit on all v2 routes
 app.use("/" + v2prefix + "/", route_ratelimit_1.routeRateLimit);
-app.use("/", indexV2);
-app.use("/" + v2prefix + "/" + "health-check", healthCheckV2);
-app.use("/" + v2prefix + "/" + "address", addressV2.router);
-app.use("/" + v2prefix + "/" + "cashAccounts", cashAccountsV2.router);
-app.use("/" + v2prefix + "/" + "blockchain", blockchainV2.router);
-app.use("/" + v2prefix + "/" + "block", blockV2.router);
-app.use("/" + v2prefix + "/" + "control", controlV2.router);
-app.use("/" + v2prefix + "/" + "generating", generatingV2);
-app.use("/" + v2prefix + "/" + "mining", miningV2.router);
-app.use("/" + v2prefix + "/" + "network", networkV2);
-app.use("/" + v2prefix + "/" + "rawtransactions", rawtransactionsV2.router);
-app.use("/" + v2prefix + "/" + "transaction", transactionV2.router);
-app.use("/" + v2prefix + "/" + "util", utilV2.router);
-app.use("/" + v2prefix + "/" + "slp", slpV2.router);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = {
@@ -221,3 +191,5 @@ function onListening() {
     var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
     debug("Listening on " + bind);
 }
+//
+// module.exports = app;
