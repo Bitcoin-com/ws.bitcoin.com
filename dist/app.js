@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var wtfnode = require("wtfnode"); // Debugging the event loop
 var express = require("express");
 var req_logging_1 = require("./middleware/req-logging");
-// Middleware
-var route_ratelimit_1 = require("./middleware/route-ratelimit");
 var path = require("path");
 var logger = require("morgan");
 var wlogger = require("./util/winston-logging");
@@ -42,12 +40,6 @@ app.use(function (req, res, next) {
     req.io = io;
     next();
 });
-var v2prefix = "v2";
-// Instantiate the authorization middleware, used to implement pro-tier rate limiting.
-var auth = new AuthMW();
-app.use("/" + v2prefix + "/", auth.mw());
-// Rate limit on all v2 routes
-app.use("/" + v2prefix + "/", route_ratelimit_1.routeRateLimit);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = {
@@ -74,7 +66,7 @@ app.use(function (err, req, res, next) {
  */
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
-console.log("rest.bitcoin.com started on port " + port);
+console.log("ws.bitcoin.com started on port " + port);
 /**
  * Create HTTP server.
  */
