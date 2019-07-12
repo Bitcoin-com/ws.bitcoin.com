@@ -1,0 +1,10 @@
+ws.bitcoin.com:
+  build: .
+  dockerfile: Dockerfile
+  #image: bitcore
+  container_name: ws.bitcoin.com
+  #links:
+  #  - mongodb
+  ports:
+    - "3000:3000"
+  restart: always
