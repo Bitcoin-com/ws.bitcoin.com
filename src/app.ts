@@ -2,8 +2,6 @@ const wtfnode = require("wtfnode") // Debugging the event loop
 
 import * as express from "express"
 import { logReqInfo } from "./middleware/req-logging"
-// Middleware
-import { routeRateLimit } from "./middleware/route-ratelimit"
 
 const path = require("path")
 const logger = require("morgan")
@@ -23,14 +21,6 @@ const zmq = require("zeromq")
 
 const sock: any = zmq.socket("sub")
 
-const swStats = require("swagger-stats")
-let apiSpec
-if (process.env.NETWORK === "mainnet") {
-  apiSpec = require("./public/bitcoin-com-mainnet-rest-v2.json")
-} else {
-  apiSpec = require("./public/bitcoin-com-testnet-rest-v2.json")
-}
-
 interface IError {
   message: string
   status: number
@@ -41,8 +31,6 @@ require("dotenv").config()
 const app: express.Application = express()
 
 app.locals.env = process.env
-
-app.use(swStats.getMiddleware({ swaggerSpec: apiSpec }))
 
 app.use(helmet())
 
@@ -93,15 +81,6 @@ app.use(
   }
 )
 
-const v2prefix = "v2"
-
-// Instantiate the authorization middleware, used to implement pro-tier rate limiting.
-const auth = new AuthMW()
-app.use(`/${v2prefix}/`, auth.mw())
-
-// Rate limit on all v2 routes
-app.use(`/${v2prefix}/`, routeRateLimit)
-
 // catch 404 and forward to error handler
 app.use(
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -142,7 +121,7 @@ app.use(
  */
 const port = normalizePort(process.env.PORT || "3000")
 app.set("port", port)
-console.log(`rest.bitcoin.com started on port ${port}`)
+console.log(`ws.bitcoin.com started on port ${port}`)
 
 /**
  * Create HTTP server.

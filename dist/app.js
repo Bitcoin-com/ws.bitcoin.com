@@ -19,18 +19,9 @@ var AuthMW = require("./middleware/auth");
 var BitcoinCashZMQDecoder = require("bitcoincash-zmq-decoder");
 var zmq = require("zeromq");
 var sock = zmq.socket("sub");
-var swStats = require("swagger-stats");
-var apiSpec;
-if (process.env.NETWORK === "mainnet") {
-    apiSpec = require("./public/bitcoin-com-mainnet-rest-v2.json");
-}
-else {
-    apiSpec = require("./public/bitcoin-com-testnet-rest-v2.json");
-}
 require("dotenv").config();
 var app = express();
 app.locals.env = process.env;
-app.use(swStats.getMiddleware({ swaggerSpec: apiSpec }));
 app.use(helmet());
 app.use(cors());
 app.enable("trust proxy");
