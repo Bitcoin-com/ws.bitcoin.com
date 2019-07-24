@@ -1,7 +1,7 @@
 {
-  "name": "rest.bitcoin.com",
-  "version": "3.11.9",
-  "description": "REST API for Bitcoin.com's Cloud",
+  "name": "ws.bitcoin.com",
+  "version": "0.1.1",
+  "description": "Websocket API for Bitcoin.com's Cloud",
   "author": "Gabriel Cardona <gabriel@bitcoin.com>",
   "contributors": [
     "Chris Troutner <chris.troutner@gmail.com>"

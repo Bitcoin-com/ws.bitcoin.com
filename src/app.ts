@@ -1,7 +1,7 @@
 const wtfnode = require("wtfnode") // Debugging the event loop
 
 import * as express from "express"
-import { logReqInfo } from "./middleware/req-logging"
+// import { logReqInfo } from "./middleware/req-logging"
 
 const path = require("path")
 const logger = require("morgan")
@@ -56,7 +56,12 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, "public")))
 
 // Local logging middleware for tracking incoming connection information.
-app.use(`/`, logReqInfo)
+// app.use(`/`, logReqInfo)
+
+// render view for landing page.
+const indexV1 = require("./routes/index")
+
+app.use("/", indexV1)
 
 //
 // let username = process.env.USERNAME;

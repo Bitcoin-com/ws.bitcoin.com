@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var wtfnode = require("wtfnode"); // Debugging the event loop
 var express = require("express");
-var req_logging_1 = require("./middleware/req-logging");
+// import { logReqInfo } from "./middleware/req-logging"
 var path = require("path");
 var logger = require("morgan");
 var wlogger = require("./util/winston-logging");
@@ -34,7 +34,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 // Local logging middleware for tracking incoming connection information.
-app.use("/", req_logging_1.logReqInfo);
+// app.use(`/`, logReqInfo)
+// render view for landing page.
+var indexV1 = require("./routes/index");
+app.use("/", indexV1);
 // Make io accessible to our router
 app.use(function (req, res, next) {
     req.io = io;
